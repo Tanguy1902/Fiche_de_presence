@@ -1,0 +1,5 @@
+fiche_de_presence/venv/
+fiche_de_presence/db.sqlite3
+__pycache__/
+*.pyc
+.DS_Store
