@@ -8,6 +8,7 @@ from django.db import IntegrityError
 # Viewset pour le lycée
 class LyceeViewSet(viewsets.ModelViewSet):
     queryset = Lycee.objects.all() # recuperer tout les lycées existant dans la base des données
+    print(queryset)
     serializer_class = LyceeSerializer
 
 #viewset pour Profil

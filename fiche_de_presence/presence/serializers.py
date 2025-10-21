@@ -82,7 +82,7 @@ class PresenceSerializer(serializers.ModelSerializer):
             'date',
             'timestamp',
         ]
-        read_only_fields = ['timestamp', 'fait_par_detail']
+        read_only_fields = ['lycee', 'timestamp', 'fait_par_detail']
         extra_kwargs = {
             'present': {'help_text': 'Cocher si le ninja est présent', 'default': False},
             'date': {'help_text': 'Date de la présence (YYYY-MM-DD)'}
