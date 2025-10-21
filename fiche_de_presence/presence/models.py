@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from datetime import datetime
+from datetime import date
 
 
 class Lycee(models.Model):
@@ -9,6 +9,21 @@ class Lycee(models.Model):
 
     def __str__(self):
         return self.nom
+    
+# --- Equipe (chaque lycée a une équipe CoderDojo assignée) ---
+class Equipe(models.Model):
+    nom = models.CharField(max_length=100)
+    lycee = models.OneToOneField(Lycee, on_delete=models.CASCADE, related_name="equipe")
+
+    def __str__(self):
+        return f"{self.nom} ({self.lycee.nom})"
+    
+class Profil(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profil")
+    equipe = models.ForeignKey(Equipe, on_delete=models.CASCADE, related_name="membres")
+
+    def __str__(self):
+        return f"{self.user.username} ({self.equipe.nom if self.equipe else 'Aucune équipe'})"
 
 
 class Ninja(models.Model):
@@ -34,11 +49,17 @@ class Presence(models.Model):
     lycee = models.ForeignKey(Lycee, on_delete=models.CASCADE) 
     present = models.BooleanField(default=False)
     fait_par = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
-    date = models.DateField(default=datetime.now)  # <-- date de présence spécifique
+    date = models.DateField(default=date.today)  # <-- date de présence spécifique
     timestamp = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        unique_together = ('ninja', 'session', 'date')  # On ajoute date pour que chaque jour soit unique
+        constraints = [
+            models.UniqueConstraint(
+                fields=['ninja', 'session'],
+                name='unique_presence_per_ninja_session'
+            )
+        ]
+
 
     def __str__(self):
         etat = "Présent" if self.present else "Absent"
