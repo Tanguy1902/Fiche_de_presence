@@ -3,3 +3,7 @@ fiche_de_presence/db.sqlite3
 __pycache__/
 *.pyc
 .DS_Store
+Fiche_de_presence/node_modules/
+Fiche_de_presence/.vscode/
+Fiche_de_presence/.gitignore
+Fiche_de_presence/.expo/
