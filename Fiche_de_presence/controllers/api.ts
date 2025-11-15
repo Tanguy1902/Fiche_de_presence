@@ -5,7 +5,7 @@ export async function refreshToken() {
         const refreshToken = await AsyncStorage.getItem('refresh_token');
         if (!refreshToken) throw new Error('No refresh token found');
 
-        const response = await fetch('http://192.168.1.205:8000/api/token/refresh/', {
+        const response = await fetch('http://192.168.43.1:8000/api/token/refresh/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
